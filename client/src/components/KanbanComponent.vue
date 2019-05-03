@@ -18,10 +18,13 @@
         :slot="block.id"
       >
         <div>
-          <span class="text-warning"> {{ block.id }} </span>
+          <span class="badge badge-warning"> {{ block.id }} </span>
         </div>
         <div>
-          <span class="text-light"> {{ block.title }} </span>
+          <span class="badge badge-primary"> {{ block.title }} </span> <span class="badge badge-secondary">{{ block.agile }}  </span>
+        </div>
+        <div>
+          <span class="text-info"> {{ block.name }} </span>
         </div>
       </div>
     </kanban-board>
@@ -78,7 +81,9 @@ export default {
                       id: summary.ExceptionNumber,
                       exId: summary.Id,
                       status: summary.Status,
-                      title: summary.Exception_Agile_ECO_MCO__c + ' - ' + summary.ECO_MCO_status
+                      title: summary.Exception_Agile_ECO_MCO__c + ' -> ',
+                      agile: summary.ECO_MCO_status,
+                      name: summary.Name,
                     }));
                   })
                   .catch(() => {

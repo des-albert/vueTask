@@ -78,50 +78,55 @@ agileRoute.route('/').get((req, res) => {
 
 function getChangeStaus (change, secure) {
   return new Promise ((resolve, reject) => {
-    let wsdl = __dirname + '/wsdl/Search.wsdl';
-    soap.createClient(wsdl, {}, (err, searchClient) => {
-      if (err) {
-        console.log('QuickSearch createClient error : ' + err);
-        reject();
-      }
-
-      // Change Object Identifier
-
-      searchClient.setSecurity(secure);
-      const searchMethod = searchClient['SearchService']['Search']['quickSearch'];
-      argsSearch.request.classIdentifier = change.substring(0, 3);
-      argsSearch.request.keywords = change.substring(4, 9);
-      searchMethod(argsSearch, (err, searchResult) => {
+    if (change === null) {
+      resolve(null);
+    }
+    else {
+      let wsdl = __dirname + '/wsdl/Search.wsdl';
+      soap.createClient(wsdl, {}, (err, searchClient) => {
         if (err) {
-          console.log('QuickSearch method error : ' + err);
+          console.log('QuickSearch createClient error : ' + err);
           reject();
         }
-        const id = searchResult.response.table.row.objectReferentId.objectId;
 
-        // Change Status
+        // Change Object Identifier
 
-        wsdl = __dirname + '/wsdl/Collaboration.wsdl';
-        soap.createClient(wsdl, {}, (err, collabClient) => {
+        searchClient.setSecurity(secure);
+        const searchMethod = searchClient['SearchService']['Search']['quickSearch'];
+        argsSearch.request.classIdentifier = change.substring(0, 3);
+        argsSearch.request.keywords = change.substring(4, 9);
+        searchMethod(argsSearch, (err, searchResult) => {
           if (err) {
-            console.log('Collaboration createClient error : ' + err);
+            console.log('QuickSearch method error : ' + err);
             reject();
           }
-          collabClient.setSecurity(secure);
-          argsCollaboration.request.statusRequest.classIdentifier = change.substring(0, 3);
-          argsCollaboration.request.statusRequest.objectNumber = id;
-          const collabationMethod = collabClient['CollaborationService']['Collaboration']['getStatus'];
-          collabationMethod(argsCollaboration, (err, collabResult) => {
+          const id = searchResult.response.table.row.objectReferentId.objectId;
+
+          // Change Status
+
+          wsdl = __dirname + '/wsdl/Collaboration.wsdl';
+          soap.createClient(wsdl, {}, (err, collabClient) => {
             if (err) {
-              console.log('Collaboration method error : ' + err);
+              console.log('Collaboration createClient error : ' + err);
               reject();
             }
-            let objStatus = collabResult.response.statusResponse.currentStatus.statusDisplayName;
+            collabClient.setSecurity(secure);
+            argsCollaboration.request.statusRequest.classIdentifier = change.substring(0, 3);
+            argsCollaboration.request.statusRequest.objectNumber = id;
+            const collabationMethod = collabClient['CollaborationService']['Collaboration']['getStatus'];
+            collabationMethod(argsCollaboration, (err, collabResult) => {
+              if (err) {
+                console.log('Collaboration method error : ' + err);
+                reject();
+              }
+              let objStatus = collabResult.response.statusResponse.currentStatus.statusDisplayName;
 
-            resolve(objStatus);
+              resolve(objStatus);
+            });
           });
         });
       });
-    });
+    }
   });
 }
 

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
+  "repository": "https://github.com/des-albert/vueTask",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,6 +18,6 @@
     "moment": "^2.24.0",
     "node-cache": "^4.2.0",
     "serve-static": "^1.13.2",
-    "strong-soap": "^1.17.0"
+    "strong-soap": "^1.19.1"
   }
 }

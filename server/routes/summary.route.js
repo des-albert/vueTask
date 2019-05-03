@@ -15,6 +15,7 @@
  *        ECO_MCO_status:
  *        ExceptionId:
  *        ExceptionNumber:
+ *        Name:
  *
  */
 
@@ -37,6 +38,7 @@ summaryRoute.route('/').get((req, res) => {
           let ex = exceptions.find(exception => (exception.Id === tasks[i].WhatId));
           tasks[i].ExceptionId = ex.Id;
           tasks[i].ExceptionNumber = ex.Exception_Number__c;
+          tasks[i].Name = ex.Name;
         }
         res.json(tasks);
       }

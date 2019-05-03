@@ -72,7 +72,6 @@ export default {
       if (process.env.NODE_ENV !== 'production') {
         uri = 'http://localhost:4000/signIn';
       }
-
       this.axios.post(uri, this.userData, {withCredentials: true})
         .then( () =>   {
           this.$store.commit('change', this.userData.sfdcName);
