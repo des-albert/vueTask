@@ -37,6 +37,10 @@ summaryRoute.route('/').get((req, res) => {
           delete tasks[i].attributes;
           let ex = exceptions.find(exception => (exception.Id === tasks[i].WhatId));
           tasks[i].ExceptionId = ex.Id;
+          if (tasks[i].Exception_Agile_ECO_MCO__c == null)
+            tasks[i].Exception_Agile_ECO_MCO__c = '';
+          if (tasks[i].ECO_MCO_status == null)
+            tasks[i].ECO_MCO_status = '';
           tasks[i].ExceptionNumber = ex.Exception_Number__c;
           tasks[i].Name = ex.Name;
         }

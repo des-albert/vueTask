@@ -2,7 +2,7 @@
   <div class="container">
     <kanban-board
       :stages="stages"
-      :blocks="blocks"
+      :blocks="exBlocks"
       @update-block="updateBlock"
     >
       <div
@@ -12,21 +12,24 @@
       >
         <h2>{{ stage }}</h2>
       </div>
+
       <div
-        v-for="block in blocks"
-        :key="block.id"
+        v-for="block in exBlocks"
+        :key="block.status + block.id"
         :slot="block.id"
       >
         <div>
-          <span class="badge badge-warning"> {{ block.id }} </span>
+          <span class="text-info" style="font-size:12px"> {{ block.name }} </span>
         </div>
         <div>
-          <span class="badge badge-primary"> {{ block.title }} </span> <span class="badge badge-secondary">{{ block.agile }}  </span>
+          <span class="text-warning" style="font-size:12px"> {{ block.exNum }} </span><br>
         </div>
-        <div>
-          <span class="text-info"> {{ block.name }} </span>
+        <div v-if="block.change !== ' - ' ">
+          <span class="text-secondary" style="font-size:10px"> {{ block.change }} {{ block.agile }}  </span>
         </div>
+
       </div>
+
     </kanban-board>
   </div>
 </template>
@@ -36,7 +39,15 @@ export default {
   data() {
     return {
       stages: ['Not Started', 'In Progress', 'Completed'],
-      blocks: []
+      exBlocks: [
+        {
+          id: null,
+          status: null,
+          change: null,
+          agile: null,
+          name: null
+        }
+      ]
     };
   },
 
@@ -77,13 +88,12 @@ export default {
                 }
                 this.axios.get(uri, {withCredentials: true})
                   .then(response => {
-                    this.blocks = response.data.map(summary => ({
-                      id: summary.ExceptionNumber,
-                      exId: summary.Id,
+                    this.exBlocks = response.data.map(summary => ({
+                      id: summary.Id,
+                      exNum: summary.ExceptionNumber,
                       status: summary.Status,
-                      title: summary.Exception_Agile_ECO_MCO__c + ' -> ',
-                      agile: summary.ECO_MCO_status,
-                      name: summary.Name,
+                      change: summary.Exception_Agile_ECO_MCO__c + ' - ' + summary.ECO_MCO_status,
+                      name: summary.Name
                     }));
                   })
                   .catch(() => {
@@ -113,8 +123,7 @@ export default {
         if (process.env.NODE_ENV !== 'production') {
           uri = `http://localhost:4000/task/progress/${bl.exId}`;
         }
-      }
-      else {
+      } else {
         uri = `/task/complete/${bl.exId}`;
         if (process.env.NODE_ENV !== 'production') {
           uri = `http://localhost:4000/task/complete/${bl.exId}`;
@@ -125,7 +134,7 @@ export default {
           this.$router.push({name: 'kanban'});
           location.reload();
         })
-        .catch( () => {
+        .catch(() => {
         });
     },
   }

@@ -52,7 +52,6 @@ agileRoute.route('/').get((req, res) => {
     let promises = [];
     for (let i = 0; i < tasks.length; i++) {
       const change = tasks[i].Exception_Agile_ECO_MCO__c;
-
       promises.push(getChangeStaus(change, security));
     }
 
@@ -100,7 +99,7 @@ function getChangeStaus (change, secure) {
             console.log('QuickSearch method error : ' + err);
             reject();
           }
-          const id = searchResult.response.table.row.objectReferentId.objectId;
+          let id = searchResult.response.table.row.objectReferentId.objectId;
 
           // Change Status
 
