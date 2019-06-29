@@ -39,15 +39,7 @@ export default {
   data() {
     return {
       stages: ['Not Started', 'In Progress', 'Completed'],
-      exBlocks: [
-        {
-          id: null,
-          status: null,
-          change: null,
-          agile: null,
-          name: null
-        }
-      ]
+      exBlocks: []
     };
   },
 
