@@ -10,17 +10,17 @@
   "dependencies": {
     "@vue/eslint-plugin": "^4.2.0",
     "axios": "^0.18.1",
-    "bootstrap": "^4.3.1",
+    "bootstrap": "^4.5.2",
     "core-js": "^2.6.9",
-    "jquery": "^3.4.1",
-    "node-sass": "^4.12.0",
+    "jquery": "^3.5.1",
+    "node-sass": "^4.14.1",
     "sass-loader": "^7.1.0",
     "strong-soap": "^1.20.0",
     "vue": "^2.6.10",
     "vue-axios": "^2.1.4",
-    "vue-kanban": "^1.4.0",
-    "vue-router": "^3.0.6",
-    "vuex": "^3.1.1"
+    "vue-kanban": "^1.8.0",
+    "vue-router": "^3.4.2",
+    "vuex": "^3.5.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.8.0",

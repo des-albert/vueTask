@@ -10,14 +10,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@vue/eslint-plugin": "^4.2.0",
+    "babel-eslint": "^10.1.0",
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
+    "eslint": "^6.8.0",
+    "eslint-plugin-vue": "^5.2.3",
     "express": "^4.16.4",
-    "express-session": "^1.15.6",
-    "jsforce": "^1.9.1",
-    "moment": "^2.24.0",
-    "node-cache": "^4.2.0",
+    "express-session": "^1.17.1",
+    "jsforce": "^1.9.3",
+    "moment": "^2.27.0",
+    "node-cache": "^4.2.1",
     "serve-static": "^1.13.2",
-    "strong-soap": "^1.17.0"
+    "strong-soap": "^1.22.1"
   }
 }
